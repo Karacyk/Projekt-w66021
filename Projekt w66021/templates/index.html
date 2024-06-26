@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Editor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Image Editor</h1>
+        <form method="POST" action="/upload" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <select name="action" id="action" onchange="showFields()" required>
+                <option value="">Select Action</option>
+                <option value="resize">Resize</option>
+                <option value="rotate">Rotate</option>
+                <option value="brightness">Adjust Brightness</option>
+                <option value="contrast">Adjust Contrast</option>
+                <option value="collage">Create Collage</option>
+            </select>
+            <div id="resizeFields" class="action-fields">
+                <input type="number" name="width" placeholder="Width">
+                <input type="number" name="height" placeholder="Height">
+            </div>
+            <div id="rotateFields" class="action-fields">
+                <input type="number" name="angle" placeholder="Angle">
+            </div>
+            <div id="brightnessFields" class="action-fields">
+                <input type="number" name="factor" step="0.1" placeholder="Brightness Factor (0.0 - 2.0)">
+            </div>
+            <div id="contrastFields" class="action-fields">
+                <input type="number" name="factor" step="0.1" placeholder="Contrast Factor (0.0 - 2.0)">
+            </div>
+            <div id="collageFields" class="action-fields">
+                <input type="file" name="file2">
+            </div>
+            <button type="submit">Upload and Edit</button>
+        </form>
+    </div>
+    <script>
+        function showFields() {
+            const action = document.getElementById('action').value;
+            document.querySelectorAll('.action-fields').forEach(field => field.style.display = 'none');
+            if (action === 'resize') {
+                document.getElementById('resizeFields').style.display = 'block';
+            } else if (action === 'rotate') {
+                document.getElementById('rotateFields').style.display = 'block';
+            } else if (action === 'brightness') {
+                document.getElementById('brightnessFields').style.display = 'block';
+            } else if (action === 'contrast') {
+                document.getElementById('contrastFields').style.display = 'block';
+            } else if (action === 'collage') {
+                document.getElementById('collageFields').style.display = 'block';
+            }
+        }
+        window.onload = showFields;
+    </script>
+</body>
+</html>
